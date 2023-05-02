@@ -10,7 +10,7 @@
 
 [Revanced Extended](https://github.com/inotia00/revanced-patches/releases)
 
-✅ or delete line 9 in [build-rv.sh](build-rv.sh) [build-rve.sh](build-rve.sh) to build
+✅ Edit or delete line 9 in [build-rv.sh](build-rv.sh) [build-rve.sh](build-rve.sh) to build
 
 ✅ Run github actions and wait
 
