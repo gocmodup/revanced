@@ -1,6 +1,7 @@
 dl_gh() {
     for repo in revanced-patches revanced-cli revanced-integrations ; do
-    asset_urls=$(wget -qO- "https://api.github.com/repos/$1/$repo/releases/latest" | jq -r '.assets[] | "\(.browser_download_url) \(.name)"')
+    asset_urls=$(wget -qO- "https://api.github.com/repos/$1/$repo/releases/latest" \
+                            | jq -r '.assets[] | "\(.browser_download_url) \(.name)"')
         while read -r url names
         do
             echo "Downloading $names from $url"
