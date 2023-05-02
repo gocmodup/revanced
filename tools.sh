@@ -27,55 +27,55 @@ get_apk_vers() {
     req "$1" - | sed -n 's;.*Version:</span><span class="infoSlide-value">\(.*\) </span>.*;\1;p'
 }
 get_largest_ver() {
-  	local max=0
-  	while read -r v || [ -n "$v" ]; do
-    		if [[ ${v//[!0-9]/} -gt ${max//[!0-9]/} ]]; then max=$v; fi
+  local max=0
+  while read -r v || [ -n "$v" ]; do   		
+	if [[ ${v//[!0-9]/} -gt ${max//[!0-9]/} ]]; then max=$v; fi
 	  done
       	if [[ $max = 0 ]]; then echo ""; else echo "$max"; fi
 }
 dl_apk() {
-	 local url=$1 regexp=$2 output=$3
-	 url="https://www.apkmirror.com$(req "$url" - | tr '\n' ' ' | sed -n "s/href=\"/@/g; s;.*${regexp}.*;\1;p")"
-	 echo "$url"
-	 url="https://www.apkmirror.com$(req "$url" - | tr '\n' ' ' | sed -n 's;.*href="\(.*key=[^"]*\)">.*;\1;p')"
-	 url="https://www.apkmirror.com$(req "$url" - | tr '\n' ' ' | sed -n 's;.*href="\(.*key=[^"]*\)">.*;\1;p')"
-	 req "$url" "$output"
+  local url=$1 regexp=$2 output=$3
+  url="https://www.apkmirror.com$(req "$url" - | tr '\n' ' ' | sed -n "s/href=\"/@/g; s;.*${regexp}.*;\1;p")"
+  echo "$url"
+  url="https://www.apkmirror.com$(req "$url" - | tr '\n' ' ' | sed -n 's;.*href="\(.*key=[^"]*\)">.*;\1;p')"
+  url="https://www.apkmirror.com$(req "$url" - | tr '\n' ' ' | sed -n 's;.*href="\(.*key=[^"]*\)">.*;\1;p')"
+  req "$url" "$output"
 }
 get_apk() {
-	 echo "Downloading $1"
-	 local last_ver
-	 last_ver="$version"
-	 last_ver="${last_ver:-$(get_apk_vers "https://www.apkmirror.com/uploads/?appcategory=$2" | get_largest_ver)}"
-	 echo "Choosing version '${last_ver}'"
-	 local base_apk="$1.apk"
-	 dl_url=$(dl_apk "https://www.apkmirror.com/apk/$3-${last_ver//./-}-release/" \
+  echo "Downloading $1"
+  local last_ver
+  last_ver="$version"
+  last_ver="${last_ver:-$(get_apk_vers "https://www.apkmirror.com/uploads/?appcategory=$2" | get_largest_ver)}"
+  echo "Choosing version '${last_ver}'"
+  local base_apk="$1.apk"
+  dl_url=$(dl_apk "https://www.apkmirror.com/apk/$3-${last_ver//./-}-release/" \
 			"APK</span>[^@]*@\([^#]*\)" \
 			"$base_apk")
-	 echo "$1 version: ${last_ver}"
-	 echo "downloaded from: [APKMirror - $1]($dl_url)"
+  echo "$1 version: ${last_ver}"
+  echo "downloaded from: [APKMirror - $1]($dl_url)"
 }
 get_apk_arch() {
-	 echo "Downloading $1 (${arm64-v8a})"
-	 local last_ver
-	 last_ver="$version"
-	 last_ver="${last_ver:-$(get_apk_vers "https://www.apkmirror.com/uploads/?appcategory=$2" | get_largest_ver)}"
-	 echo "Choosing version '${last_ver}'"
-	 local base_apk="$1.apk"
-	 local regexp_arch='arm64-v8a</div>[^@]*@\([^"]*\)'
-	 dl_url=$(dl_apk "https://www.apkmirror.com/apk/$3-${last_ver//./-}-release/" \
+  echo "Downloading $1 (${arm64-v8a})"
+  local last_ver
+  last_ver="$version"
+  last_ver="${last_ver:-$(get_apk_vers "https://www.apkmirror.com/uploads/?appcategory=$2" | get_largest_ver)}"
+  echo "Choosing version '${last_ver}'"
+  local base_apk="$1.apk"
+  local regexp_arch='arm64-v8a</div>[^@]*@\([^"]*\)'
+  dl_url=$(dl_apk "https://www.apkmirror.com/apk/$3-${last_ver//./-}-release/" \
 			"$regexp_arch" \
 			"$base_apk")
-	 echo "$1 (${arm64-v8a}) version: ${last_ver}"
-	 echo "downloaded from: [APKMirror - $1 ${arm64-v8a}]($dl_url)"
+  echo "$1 (${arm64-v8a}) version: ${last_ver}"
+  echo "downloaded from: [APKMirror - $1 ${arm64-v8a}]($dl_url)"
 }
 get_ver() {
-version=$(jq -r --arg st1 "$1" --arg st2 "$2" '
-  .[]
-  | select(.name == $st1)
-  | .compatiblePackages[]
-  | select(.name == $st2)
-  | .versions[-1]
-  ' patches.json)
+    version=$(jq -r --arg st1 "$1" --arg st2 "$2" '
+    .[]
+    | select(.name == $st1)
+    | .compatiblePackages[]
+    | select(.name == $st2)
+    | .versions[-1]
+    ' patches.json)
 }
 patch() {
     if [ -f "$1.apk" ]; then
