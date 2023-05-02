@@ -69,11 +69,11 @@ get_apk_arch() {
   echo "downloaded from: [APKMirror - $1 ${arm64-v8a}]($dl_url)"
 }
 get_ver() {
-    version=$(jq -r --arg st1 "$1" --arg st2 "$2" '
+    version=$(jq -r --arg patch_name "$1" --arg pkg_name "$2" '
     .[]
-    | select(.name == $st1)
+    | select(.name == $patch_name)
     | .compatiblePackages[]
-    | select(.name == $st2)
+    | select(.name == $pkg_name)
     | .versions[-1]
     ' patches.json)
 }
