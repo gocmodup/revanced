@@ -7,7 +7,9 @@
 ✅ Config your patches in folder 
 
 [Revanced](https://github.com/revanced/revanced-patches/releases)
+
 [Revanced Extended](https://github.com/inotia00/revanced-patches/releases)
+
 ✅ or delete line 9 in [build-rv.sh](build-rv.sh) [build-rve.sh](build-rve.sh) to build
 
 ✅ Run github actions and wait
