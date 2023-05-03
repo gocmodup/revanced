@@ -10,6 +10,7 @@ release=$(curl -s "https://api.github.com/repos/luxysiv/revanced-nonroot/release
 asset=$(echo "$release" | jq -r '.assets[] | select(.name == "revanced-extended-version.txt") | .browser_download_url')
 curl -sL -O "$asset"
 if diff -q revanced-extended-version.txt new.txt >/dev/null ; then
+rm -f *.txt
 echo "Old patch!!! Not build"
 exit 0
 else
