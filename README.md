@@ -17,8 +17,8 @@
 ✅ Take apk in releases
 
 
-# Download MicroG from inotia00 source 
-[![Release](https://img.shields.io/github/v/release/inotia00/vancedmicrog?label=MicroG)](https://github.com/inotia00/VancedMicroG/releases/latest/download/microg.apk)
+# Download mMicroG from inotia00 source 
+[![Release](https://img.shields.io/github/v/release/inotia00/vancedmicrog?label=MicroG)](https://github.com/inotia00/mMicroG/releases/latest/download/microg.apk)
 
 👆 to download MicroG
 
