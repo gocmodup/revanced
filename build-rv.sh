@@ -1,14 +1,14 @@
 #!/bin/bash
 # Revanced build
 source tools.sh
-release=$(curl -s "https://api.github.com/repos/revanced/revanced-patches/releases/latest")
+release=$(wget -qO- "https://api.github.com/repos/revanced/revanced-patches/releases/latest")
 asset=$(echo "$release" | jq -r '.assets[] | select(.name | test("revanced-patches.*\\.jar$")) | .browser_download_url')
-curl -sL -O "$asset"
+wget -q -O "$asset"
 ls revanced-patches*.jar >> new.txt
 rm -f revanced-patches*.jar
-release=$(curl -s "https://api.github.com/repos/luxysiv/revanced-nonroot/releases/latest")
+release=$(wget -qO- "https://api.github.com/repos/luxysiv/revanced-nonroot/releases/latest")
 asset=$(echo "$release" | jq -r '.assets[] | select(.name == "revanced-version.txt") | .browser_download_url')
-curl -sL -O "$asset"
+wget -q -O "$asset"
 if diff -q revanced-version.txt new.txt >/dev/null ; then
 rm -f *.txt
 echo "Old patch!!! Not build"
