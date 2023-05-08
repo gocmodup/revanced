@@ -1,7 +1,5 @@
 <a href="https://visitcount.itsvg.in">
-
   <img src="https://visitcount.itsvg.in/api?id=luxysiv&label=Visitors&color=0&icon=0&pretty=false" />
-
 </a>
 
 # How to use
@@ -23,10 +21,10 @@
 ✅ Take apk in releases
 
 
-# Download mMicroG from inotia00 source 
-[![Release](https://img.shields.io/github/v/release/inotia00/vancedmicrog?label=mMicroG)](https://github.com/inotia00/mMicroG/releases/latest/download/microg.apk)
+# Download mMicroG patched hide incon from inotia00 patch/source 
+[![Release](https://img.shields.io/github/v/release/inotia00/mMicroG?label=mMicroG)](https://github.com/luxysiv/mMicroG-patch/releases/latest/download/microg.apk)
 
-👆 to download MicroG
+👆 to download mMicroG
 
 Necessary for non-root user. Install first
 
