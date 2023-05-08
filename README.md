@@ -22,7 +22,7 @@
 
 
 # Download mMicroG patched hide incon from inotia00 patch/source 
-[![Release](https://img.shields.io/github/v/release/inotia00/mMicroG?label=mMicroG)](https://github.com/luxysiv/mMicroG-patch/releases/latest/download/microg.apk)
+[![Release](https://img.shields.io/github/v/release/inotia00/mMicroG?label=mMicroG)](https://github.com/luxysiv/mMicroG-patch/releases/latest/download/mMicroG.apk)
 
 👆 to download mMicroG
 
