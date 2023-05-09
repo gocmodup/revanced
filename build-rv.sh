@@ -18,27 +18,27 @@ rm -f *.txt
 dl_gh "revanced" 
 # Messenger
 get_patches_key "messenger"
-get_apk_arch "messenger" "messenger" "facebook-2/messenger/messenger"
+get_apkmirror_arch "messenger" "messenger" "facebook-2/messenger/messenger"
 patch "messenger" "messenger-revanced"
 # Patch Twitch 
 get_patches_key "twitch"
 get_ver "block-video-ads" "tv.twitch.android.app"
-get_apk "twitch" "twitch" "twitch-interactive-inc/twitch/twitch"
+get_apkmirror "twitch" "twitch" "twitch-interactive-inc/twitch/twitch"
 patch "twitch" "twitch-revanced"
 # Patch Tiktok 
 get_patches_key "tiktok"
 get_ver "sim-spoof" "com.ss.android.ugc.trill"
-get_apk "tiktok" "tik-tok-including-musical-ly" "tiktok-pte-ltd/tik-tok-including-musical-ly/tik-tok-including-musical-ly"
+get_apkmirror "tiktok" "tik-tok-including-musical-ly" "tiktok-pte-ltd/tik-tok-including-musical-ly/tik-tok-including-musical-ly"
 patch "tiktok" "tiktok-revanced"
 # Patch YouTube 
 get_patches_key "youtube-revanced"
 get_ver "video-ads" "com.google.android.youtube"
-get_apk "youtube" "youtube" "google-inc/youtube/youtube"
+get_apkmirror "youtube" "youtube" "google-inc/youtube/youtube"
 patch "youtube" "youtube-revanced"
 # Patch YouTube Music 
 get_patches_key "youtube-music-revanced"
 get_ver "hide-get-premium" "com.google.android.apps.youtube.music"
-get_apk_arch "youtube-music" "youtube-music" "google-inc/youtube-music/youtube-music"
+get_apkmirror_arch "youtube-music" "youtube-music" "google-inc/youtube-music/youtube-music"
 patch "youtube-music" "youtube-music-revanced"
 ls revanced-patches*.jar >> revanced-version.txt
 fi
