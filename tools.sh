@@ -68,20 +68,13 @@ get_apkmirror_arch() {
   echo "$1 (${arm64-v8a}) version: ${last_ver}"
   echo "downloaded from: [APKMirror - $1 ${arm64-v8a}]($dl_url)"
 }
-dl_uptodown() {
-    local app_name="$1"
-    local package_name="$2"
-    local version="$3"
-    if [ -z "$version" ]; then
-        local dl_url=$(curl -s "https://$app_name.en.uptodown.com/android/download" | grep -oE "https:\/\/dw\.uptodown\.com.+\/")
-    else
-        local dl_url=$(curl -s "https://$app_name.en.uptodown.com/android/download/$version" | grep -oE "https:\/\/dw\.uptodown\.com.+\/")
-    fi
-    local apk_name=$(echo "$package_name" | tr '.' '_' | awk '{ print tolower($0) ".apk" }')
-    if [ ! -f "$apk_name" ]; then
-        echo "Downloading $apk_name"
-        curl -sLo "$apk_name" "$dl_url"
-    fi
+get_uptodown() {
+  local dl_url=$(curl -s "https://$1.en.uptodown.com/android/download" | grep -oE "https:\/\/dw\.uptodown\.com.+\/")
+  local apk_name=$(echo "$2" | tr '.' '_' | awk '{ print tolower($0) ".apk" }')
+  if [ ! -f "$apk_name" ]; then
+      echo "Downloading $apk_name"
+      curl -sLo "$apk_name" "$dl_url"
+  fi
 }
 get_ver() {
     version=$(jq -r --arg patch_name "$1" --arg pkg_name "$2" '
