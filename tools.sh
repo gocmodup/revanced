@@ -41,7 +41,7 @@ dl_apk() {
   url="https://www.apkmirror.com$(req "$url" - | tr '\n' ' ' | sed -n 's;.*href="\(.*key=[^"]*\)">.*;\1;p')"
   req "$url" "$output"
 }
-get_apk() {
+get_apkmirror() {
   echo "Downloading $1"
   local last_ver
   last_ver="$version"
@@ -54,7 +54,7 @@ get_apk() {
   echo "$1 version: ${last_ver}"
   echo "downloaded from: [APKMirror - $1]($dl_url)"
 }
-get_apk_arch() {
+get_apkmirror_arch() {
   echo "Downloading $1 (${arm64-v8a})"
   local last_ver
   last_ver="$version"
@@ -67,6 +67,14 @@ get_apk_arch() {
 			"$base_apk")
   echo "$1 (${arm64-v8a}) version: ${last_ver}"
   echo "downloaded from: [APKMirror - $1 ${arm64-v8a}]($dl_url)"
+}
+get_uptodown() {
+  local dl_url=$(curl -s "https://$1.en.uptodown.com/android/download" | grep -oE "https:\/\/dw\.uptodown\.com.+\/")
+  local apk_name=$(echo "$2" | tr '.' '_' | awk '{ print tolower($0) ".apk" }')
+  if [ ! -f "$apk_name" ]; then
+      echo "Downloading $apk_name"
+      curl -sLo "$apk_name" "$dl_url"
+  fi
 }
 get_ver() {
     version=$(jq -r --arg patch_name "$1" --arg pkg_name "$2" '
