@@ -23,7 +23,7 @@ get_patches_key() {
 req() { 
     wget -nv -O "$2" -U "Mozilla/5.0 (X11; Linux x86_64; rv:111.0) Gecko/20100101 Firefox/111.0" "$1"
 }
-get_apk_vers() { 
+get_apkmirror_vers() { 
     req "$1" - | sed -n 's;.*Version:</span><span class="infoSlide-value">\(.*\) </span>.*;\1;p'
 }
 get_largest_ver() {
@@ -33,7 +33,14 @@ get_largest_ver() {
 	  done
       	if [[ $max = 0 ]]; then echo ""; else echo "$max"; fi
 }
-dl_apk() {
+get_uptodown_resp() {
+    req "${1}/versions" -
+}
+
+get_uptodown_vers() {
+    sed -n 's;.*version">\(.*\)</span>$;\1;p' <<< "$1"
+}
+dl_apkmirror() {
   local url=$1 regexp=$2 output=$3
   url="https://www.apkmirror.com$(req "$url" - | tr '\n' ' ' | sed -n "s/href=\"/@/g; s;.*${regexp}.*;\1;p")"
   echo "$url"
@@ -41,14 +48,21 @@ dl_apk() {
   url="https://www.apkmirror.com$(req "$url" - | tr '\n' ' ' | sed -n 's;.*href="\(.*key=[^"]*\)">.*;\1;p')"
   req "$url" "$output"
 }
+dl_uptodown() {
+    local uptwod_resp=$1 version=$2 output=$3
+    local url
+    url=$(grep -F "${version}</span>" -B 2 <<< "$uptwod_resp" | head -1 | sed -n 's;.*data-url="\(.*\)".*;\1;p') || return 1
+    url=$(req "$url" - | sed -n 's;.*data-url="\(.*\)".*;\1;p') || return 1
+    req "$url" "$output"
+}
 get_apkmirror() {
   echo "Downloading $1"
   local last_ver
   last_ver="$version"
-  last_ver="${last_ver:-$(get_apk_vers "https://www.apkmirror.com/uploads/?appcategory=$2" | get_largest_ver)}"
+  last_ver="${last_ver:-$(get_apkmirror_vers "https://www.apkmirror.com/uploads/?appcategory=$2" | get_largest_ver)}"
   echo "Choosing version '${last_ver}'"
   local base_apk="$1.apk"
-  dl_url=$(dl_apk "https://www.apkmirror.com/apk/$3-${last_ver//./-}-release/" \
+  dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$3-${last_ver//./-}-release/" \
 			"APK</span>[^@]*@\([^#]*\)" \
 			"$base_apk")
   echo "$1 version: ${last_ver}"
@@ -58,24 +72,45 @@ get_apkmirror_arch() {
   echo "Downloading $1 (${arm64-v8a})"
   local last_ver
   last_ver="$version"
-  last_ver="${last_ver:-$(get_apk_vers "https://www.apkmirror.com/uploads/?appcategory=$2" | get_largest_ver)}"
+  last_ver="${last_ver:-$(get_apkmirror_vers "https://www.apkmirror.com/uploads/?appcategory=$2" | get_largest_ver)}"
   echo "Choosing version '${last_ver}'"
   local base_apk="$1.apk"
   local regexp_arch='arm64-v8a</div>[^@]*@\([^"]*\)'
-  dl_url=$(dl_apk "https://www.apkmirror.com/apk/$3-${last_ver//./-}-release/" \
+  dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$3-${last_ver//./-}-release/" \
 			"$regexp_arch" \
 			"$base_apk")
   echo "$1 (${arm64-v8a}) version: ${last_ver}"
   echo "downloaded from: [APKMirror - $1 ${arm64-v8a}]($dl_url)"
 }
 get_uptodown() {
-  local dl_url=$(curl -s "https://$1.en.uptodown.com/android/download" | grep -oE "https:\/\/dw\.uptodown\.com.+\/")
-  local apk_name=$(echo "$2" | tr '.' '_' | awk '{ print tolower($0) ".apk" }')
-  if [ ! -f "$apk_name" ]; then
-      echo "Downloading $apk_name"
-      curl -sLo "$apk_name" "$dl_url"
-  fi
+    local app_name="$1"
+    local package_name="$2"
+    local version="$version"
+    local apk_name=$(echo "$package_name" | tr '.' '_' | awk '{ print tolower($0) ".apk" }')
+    local uptwod_resp
+    uptwod_resp=$(get_uptodown_resp "https://${app_name}.en.uptodown.com/android")
+    local available_versions=($(get_uptodown_vers "$uptwod_resp"))
+    echo "Available versions: ${available_versions[*]}"
+    if [[ " ${available_versions[@]} " =~ " ${version} " ]]; then
+        echo "Downloading version $version"
+        dl_uptodown "$uptwod_resp" "$version" "$apk_name"
+    else
+        echo "Couldn't find specified version $version, downloading latest version"
+        version=${available_versions[0]}
+        echo "Downloading version $version"
+        uptwod_resp=$(get_uptodown_resp "https://${app_name}.en.uptodown.com/android")
+        dl_uptodown "$uptwod_resp" "$version" "$apk_name"
+    fi
 }
+#get_uptodown() {
+#  local dl_url=$(curl -s "https://$1.en.uptodown.com/android/download" | grep -oE "https:\/\/dw\.uptodown\.com.+\/")
+ # local apk_name=$(echo "$2" | tr '.' '_' | awk '{ print tolower($0) ".apk" }')
+ # if [ ! -f "$apk_name" ]; then
+ #     echo "Downloading $apk_name"
+ #     curl -sLo "$apk_name" "$dl_url"
+ # fi
+#}
+#get_uptodown "reddit-official-app" "com.reddit.frontpage" (can't download twitter)
 get_ver() {
     version=$(jq -r --arg patch_name "$1" --arg pkg_name "$2" '
     .[]
