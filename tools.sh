@@ -83,34 +83,28 @@ get_apkmirror_arch() {
   echo "downloaded from: [APKMirror - $1 ${arm64-v8a}]($dl_url)"
 }
 get_uptodown() {
-    local app_name="$1"
-    local package_name="$2"
+    Downloading $1
+    local apk_name="$1"
+    local link_name="$2"
     local version="$version"
-    local apk_name=$(echo "$package_name" | tr '.' '_' | awk '{ print tolower($0) ".apk" }')
+    local out_name=$(echo "$apk_name" | tr '.' '_' | awk '{ print tolower($0) ".apk" }')
     local uptwod_resp
-    uptwod_resp=$(get_uptodown_resp "https://${app_name}.en.uptodown.com/android")
+    uptwod_resp=$(get_uptodown_resp "https://${link_name}.en.uptodown.com/android")
     local available_versions=($(get_uptodown_vers "$uptwod_resp"))
     echo "Available versions: ${available_versions[*]}"
     if [[ " ${available_versions[@]} " =~ " ${version} " ]]; then
         echo "Downloading version $version"
-        dl_uptodown "$uptwod_resp" "$version" "$apk_name"
+        dl_uptodown "$uptwod_resp" "$version" "$out_name"
     else
         echo "Couldn't find specified version $version, downloading latest version"
         version=${available_versions[0]}
         echo "Downloading version $version"
-        uptwod_resp=$(get_uptodown_resp "https://${app_name}.en.uptodown.com/android")
-        dl_uptodown "$uptwod_resp" "$version" "$apk_name"
+        uptwod_resp=$(get_uptodown_resp "https://${link_name}.en.uptodown.com/android")
+        dl_uptodown "$uptwod_resp" "$version" "$out_name"
     fi
 }
-#get_uptodown() {
-#  local dl_url=$(curl -s "https://$1.en.uptodown.com/android/download" | grep -oE "https:\/\/dw\.uptodown\.com.+\/")
- # local apk_name=$(echo "$2" | tr '.' '_' | awk '{ print tolower($0) ".apk" }')
- # if [ ! -f "$apk_name" ]; then
- #     echo "Downloading $apk_name"
- #     curl -sLo "$apk_name" "$dl_url"
- # fi
-#}
-#get_uptodown "reddit-official-app" "com.reddit.frontpage" (can't download twitter)
+#version="2023.16.0"
+#get_uptodown "reddit" "reddit-official-app" (can't download twitter)
 get_ver() {
     version=$(jq -r --arg patch_name "$1" --arg pkg_name "$2" '
     .[]
