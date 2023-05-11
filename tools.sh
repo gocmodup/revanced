@@ -24,9 +24,11 @@ get_patches_key() {
 req() { 
     wget -nv -O "$2" -U "Mozilla/5.0 (X11; Linux x86_64; rv:111.0) Gecko/20100101 Firefox/111.0" "$1"
 }
+
 get_apkmirror_vers() { 
     req "$1" - | sed -n 's;.*Version:</span><span class="infoSlide-value">\(.*\) </span>.*;\1;p'
 }
+
 dl_apkmirror() {
   local url=$1 regexp=$2 output=$3
   url="https://www.apkmirror.com$(req "$url" - | tr '\n' ' ' | sed -n "s/href=\"/@/g; s;.*${regexp}.*;\1;p")"
@@ -35,32 +37,42 @@ dl_apkmirror() {
   url="https://www.apkmirror.com$(req "$url" - | tr '\n' ' ' | sed -n 's;.*href="\(.*key=[^"]*\)">.*;\1;p')"
   req "$url" "$output"
 }
+
 get_apkmirror() {
-  echo "Downloading $1"
-  local last_ver
-  last_ver="$version"
-  last_ver="${last_ver:-$(get_apkmirror_vers "https://www.apkmirror.com/uploads/?appcategory=$2" | sort -rV | head -n 1)}"
+  local app_name=$1 
+  local app_category=$2 
+  local app_link_tail=$3
+  echo "Downloading $app_name"
+  local last_ver=$version
+  if [[ -z $last_ver ]]; then
+    last_ver=$(get_apkmirror_vers "https://www.apkmirror.com/uploads/?appcategory=$app_category" | sort -rV | head -n 1)
+  fi
   echo "Choosing version '${last_ver}'"
-  local base_apk="$1.apk"
-  dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$3-${last_ver//./-}-release/" \
+  local base_apk="$app_name.apk"
+  local dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$app_link_tail-${last_ver//./-}-release/" \
 			"APK</span>[^@]*@\([^#]*\)" \
 			"$base_apk")
-  echo "$1 version: ${last_ver}"
-  echo "downloaded from: [APKMirror - $1]($dl_url)"
+  echo "$app_name version: ${last_ver}"
+  echo "downloaded from: [APKMirror - $app_name]($dl_url)"
 }
+
 get_apkmirror_arch() {
-  echo "Downloading $1 (${arm64-v8a})"
-  local last_ver
-  last_ver="$version"
-  last_ver="${last_ver:-$(get_apkmirror_vers "https://www.apkmirror.com/uploads/?appcategory=$2" | sort -rV | head -n 1)}"
+  local app_name=$1 
+  local app_category=$2 
+  local app_link_tail=$3 
+  echo "Downloading $app_name (arm64-v8a)"
+  local last_ver=$version
+  if [[ -z $last_ver ]]; then
+    last_ver=$(get_apkmirror_vers "https://www.apkmirror.com/uploads/?appcategory=$app_category" | sort -rV | head -n 1)
+  fi
   echo "Choosing version '${last_ver}'"
-  local base_apk="$1.apk"
-  local regexp_arch='arm64-v8a</div>[^@]*@\([^"]*\)'
-  dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$3-${last_ver//./-}-release/" \
-			"$regexp_arch" \
+  local base_apk="$app_name.apk"
+  local url_regexp='arm64-v8a</div>[^@]*@\([^"]*\)'
+  local dl_url=$(dl_apkmirror "https://www.apkmirror.com/apk/$app_link_tail-${last_ver//./-}-release/" \
+			"$url_regexp" \
 			"$base_apk")
-  echo "$1 (${arm64-v8a}) version: ${last_ver}"
-  echo "downloaded from: [APKMirror - $1 ${arm64-v8a}]($dl_url)"
+  echo "$app_name (arm64-v8a) version: ${last_ver}"
+  echo "downloaded from: [APKMirror - $app_name (arm64-v8a)]($dl_url)"
 }
 get_uptodown_resp() {
     req "${1}/versions" -
