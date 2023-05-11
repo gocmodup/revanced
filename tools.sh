@@ -1,7 +1,8 @@
 #!/bin/bash
 dl_gh() {
+    local user=$1
     for repo in revanced-patches revanced-cli revanced-integrations ; do
-    asset_urls=$(wget -qO- "https://api.github.com/repos/$1/$repo/releases/latest" \
+    asset_urls=$(wget -qO- "https://api.github.com/repos/$user/$repo/releases/latest" \
                  | jq -r '.assets[] | "\(.browser_download_url) \(.name)"')
         while read -r url names
         do
@@ -12,12 +13,13 @@ dl_gh() {
 echo "All assets downloaded"
 }
 get_patches_key() {
+    local folder=$1
     EXCLUDE_PATCHES=()
-        for word in $(cat $1/exclude-patches) ; do
+        for word in $(cat $folder/exclude-patches) ; do
             EXCLUDE_PATCHES+=("-e $word")
         done
     INCLUDE_PATCHES=()
-        for word in $(cat $1/include-patches) ; do
+        for word in $(cat $folder/include-patches) ; do
             INCLUDE_PATCHES+=("-i $word")
         done
 }
@@ -89,9 +91,10 @@ dl_uptodown() {
     req "$url" "$output"
 }
 get_uptodown() {
-    Downloading $1
+
     local apk_name="$1"
     local link_name="$2"
+    Downloading $apk_name
     local version="$version"
     local out_name=$(echo "$apk_name" | tr '.' '_' | awk '{ print tolower($0) ".apk" }')
     local uptwod_resp
@@ -121,15 +124,17 @@ get_ver() {
     ' patches.json)
 }
 patch() {
-    if [ -f "$1.apk" ]; then
+    local apk_in=$1
+    local apk_out=$2
+    if [ -f "$apk_in.apk" ]; then
     java -jar revanced-cli*.jar \
     -m revanced-integrations*.apk \
     -b revanced-patches*.jar \
-    -a $1.apk \
+    -a $apk_in.apk \
     ${EXCLUDE_PATCHES[@]} \
     ${INCLUDE_PATCHES[@]} \
     --keystore=ks.keystore \
-    -o ./build/$2.apk
+    -o ./build/$apk_out.apk
     unset version
     unset EXCLUDE_PATCHES
     unset INCLUDE_PATCHES
