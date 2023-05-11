@@ -1,3 +1,4 @@
+#!/bin/bash
 dl_gh() {
     for repo in revanced-patches revanced-cli revanced-integrations ; do
     asset_urls=$(wget -qO- "https://api.github.com/repos/$1/$repo/releases/latest" \
@@ -26,13 +27,6 @@ req() {
 get_apkmirror_vers() { 
     req "$1" - | sed -n 's;.*Version:</span><span class="infoSlide-value">\(.*\) </span>.*;\1;p'
 }
-get_uptodown_resp() {
-    req "${1}/versions" -
-}
-
-get_uptodown_vers() {
-    sed -n 's;.*version">\(.*\)</span>$;\1;p' <<< "$1"
-}
 dl_apkmirror() {
   local url=$1 regexp=$2 output=$3
   url="https://www.apkmirror.com$(req "$url" - | tr '\n' ' ' | sed -n "s/href=\"/@/g; s;.*${regexp}.*;\1;p")"
@@ -40,13 +34,6 @@ dl_apkmirror() {
   url="https://www.apkmirror.com$(req "$url" - | tr '\n' ' ' | sed -n 's;.*href="\(.*key=[^"]*\)">.*;\1;p')"
   url="https://www.apkmirror.com$(req "$url" - | tr '\n' ' ' | sed -n 's;.*href="\(.*key=[^"]*\)">.*;\1;p')"
   req "$url" "$output"
-}
-dl_uptodown() {
-    local uptwod_resp=$1 version=$2 output=$3
-    local url
-    url=$(grep -F "${version}</span>" -B 2 <<< "$uptwod_resp" | head -1 | sed -n 's;.*data-url="\(.*\)".*;\1;p') || return 1
-    url=$(req "$url" - | sed -n 's;.*data-url="\(.*\)".*;\1;p') || return 1
-    req "$url" "$output"
 }
 get_apkmirror() {
   echo "Downloading $1"
@@ -74,6 +61,20 @@ get_apkmirror_arch() {
 			"$base_apk")
   echo "$1 (${arm64-v8a}) version: ${last_ver}"
   echo "downloaded from: [APKMirror - $1 ${arm64-v8a}]($dl_url)"
+}
+get_uptodown_resp() {
+    req "${1}/versions" -
+}
+
+get_uptodown_vers() {
+    sed -n 's;.*version">\(.*\)</span>$;\1;p' <<< "$1"
+}
+dl_uptodown() {
+    local uptwod_resp=$1 version=$2 output=$3
+    local url
+    url=$(grep -F "${version}</span>" -B 2 <<< "$uptwod_resp" | head -1 | sed -n 's;.*data-url="\(.*\)".*;\1;p') || return 1
+    url=$(req "$url" - | sed -n 's;.*data-url="\(.*\)".*;\1;p') || return 1
+    req "$url" "$output"
 }
 get_uptodown() {
     Downloading $1
