@@ -91,7 +91,6 @@ dl_uptodown() {
     req "$url" "$output"
 }
 get_uptodown() {
-
     local apk_name="$1"
     local link_name="$2"
     Downloading $apk_name
