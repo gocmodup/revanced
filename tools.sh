@@ -93,7 +93,7 @@ dl_uptodown() {
 get_uptodown() {
     local apk_name="$1"
     local link_name="$2"
-    Downloading $apk_name
+    echo "Downloading $apk_name"
     local version="$version"
     local out_name=$(echo "$apk_name" | tr '.' '_' | awk '{ print tolower($0) ".apk" }')
     local uptwod_resp
