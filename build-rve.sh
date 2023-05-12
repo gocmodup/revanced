@@ -19,13 +19,13 @@ dl_gh "inotia00"
 # Patch YouTube Extended
 get_patches_key "youtube-revanced-extended"
 get_ver "hide-general-ads" "com.google.android.youtube"
-#get_apkmirror "youtube" "youtube" "google-inc/youtube/youtube"
-get_uptodown "youtube" "youtube"
+get_apkmirror "youtube" "youtube" "google-inc/youtube/youtube"
+#get_uptodown "youtube" "youtube"
 patch "youtube" "youtube-revanced-extended"
 # Patch YouTube Music Extended 
 get_patches_key "youtube-music-revanced-extended"
-#get_apkmirror_arch "youtube-music" "youtube-music" "google-inc/youtube-music/youtube-music"
-get_uptodown "youtube-music" "youtube-music" 
+get_apkmirror_arch "youtube-music" "youtube-music" "google-inc/youtube-music/youtube-music"
+#get_uptodown "youtube-music" "youtube-music" 
 patch "youtube-music" "youtube-music-revanced-extended"
 ls revanced-patches*.jar >> revanced-extended-version.txt
 fi
