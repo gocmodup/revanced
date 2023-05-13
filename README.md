@@ -14,7 +14,7 @@
 
 [Revanced Extended](https://github.com/inotia00/revanced-patches/releases)
 
-✅ Edit or delete line 9 in [build-rv.sh](build-rv.sh) [build-rve.sh](build-rve.sh) to build
+✅ Edit "luxysiv" in line 9 in [build-rv.sh](build-rv.sh) [build-rve.sh](build-rve.sh) to "your_github_name"
 
 ✅ Run github actions and wait
 
