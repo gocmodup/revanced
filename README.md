@@ -18,7 +18,7 @@
 
 ✒️  Edit "luxysiv" in line 9to "your_github_name"
 
-✒️ Change apk source APKmirror or Uptodown 
+✒️ Change apk source to down : APKmirror or Uptodown 
 
 ✒️ Add keyword to patch others app 
 
