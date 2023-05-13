@@ -14,7 +14,13 @@
 
 [Revanced Extended](https://github.com/inotia00/revanced-patches/releases)
 
-✅ Edit "luxysiv" in line 9 in [build-rv.sh](build-rv.sh) [build-rve.sh](build-rve.sh) to "your_github_name"
+✅ In [build-rv.sh](build-rv.sh) [build-rve.sh](build-rve.sh) 
+
+✒️  Edit "luxysiv" in line 9to "your_github_name"
+
+✒️ Change apk source APKmirror or Uptodown 
+
+✒️ Add keyword to patch others app 
 
 ✅ Run github actions and wait
 
