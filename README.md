@@ -16,7 +16,7 @@
 
 ✅ In [build-rv.sh](build-rv.sh) [build-rve.sh](build-rve.sh) 
 
-✒️  Edit "luxysiv" in line 9to "your_github_name"
+✒️  Change "luxysiv" in line 9 to "your_github_name"
 
 ✒️ Change apk source to down : APKmirror or Uptodown 
 
