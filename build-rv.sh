@@ -18,8 +18,8 @@ rm -f *.txt
 dl_gh "revanced" 
 # Messenger
 get_patches_key "messenger"
-get_apkmirror_arch "messenger" "messenger" "facebook-2/messenger/messenger"
-#get_uptodown "messenger" "facebook-messenger"
+#get_apkmirror_arch "messenger" "messenger" "facebook-2/messenger/messenger"
+get_uptodown "messenger" "facebook-messenger"
 patch "messenger" "messenger-revanced"
 # Patch Twitch 
 get_patches_key "twitch"
