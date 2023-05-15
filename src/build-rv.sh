@@ -1,6 +1,6 @@
 #!/bin/bash
 # Revanced build
-source tools.sh
+source ./src/tools.sh
 release=$(curl -s "https://api.github.com/repos/revanced/revanced-patches/releases/latest")
 asset=$(echo "$release" | jq -r '.assets[] | select(.name | test("revanced-patches.*\\.jar$")) | .browser_download_url')
 curl -sL -O "$asset"
