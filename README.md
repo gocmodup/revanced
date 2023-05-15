@@ -36,5 +36,3 @@ Necessary for non-root user. Install first
 
 # About
 This repository can patch YouTube/YouTube Music from revanced/inotia00 source
-
-Also patch Tiktok,Twitch and Messenger and can patch other if you want by add keyword in [build-rv.sh](build-rv.sh)
