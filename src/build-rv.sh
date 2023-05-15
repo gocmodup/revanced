@@ -22,6 +22,7 @@ get_patches_key "messenger"
 get_uptodown "messenger" "facebook-messenger"
 patch "messenger" "messenger-revanced"
 # Patch Instagram
+get_patches_key "instagram"
 version="271.1.0.21.84" 
 get_apkmirror_arch "instagram" "instagram" "/instagram/instagram-instagram"
 #get_uptodown "instagram" "instagram"
