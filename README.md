@@ -28,7 +28,7 @@
 
 
 # Download mMicroG patched hide-icon from inotia00 patch/source 
-[![Release](https://img.shields.io/github/v/release/inotia00/mMicroG?label=mMicroG)](https://github.com/luxysiv/mMicroG-patch/releases/latest/download/mMicroG.apk)
+[![Release](https://img.shields.io/github/v/release/inotia00/mMicroG?label=mMicroG)](https://github.com/luxysiv/revanced-nonroot/releases/latest/download/mMicroG.apk)
 
 👆 to download mMicroG
 
