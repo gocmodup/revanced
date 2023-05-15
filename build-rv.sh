@@ -15,7 +15,7 @@ echo "Old patch!!! Not build"
 exit 0
 else
 rm -f *.txt
-dl_gh "revanced" 
+dl_gh "revanced" "revanced-patches revanced-cli revanced-integrations" "latest"
 # Messenger
 get_patches_key "messenger"
 #get_apkmirror_arch "messenger" "messenger" "facebook-2/messenger/messenger"
