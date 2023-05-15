@@ -1,8 +1,10 @@
 #!/bin/bash
 dl_gh() {
     local user=$1
-    for repo in revanced-patches revanced-cli revanced-integrations ; do
-    asset_urls=$(wget -qO- "https://api.github.com/repos/$user/$repo/releases/latest" \
+    local repos=$2
+    local tag=$3
+    for repo in $repos ; do
+    asset_urls=$(wget -qO- "https://api.github.com/repos/$user/$repo/releases/$tag" \
                  | jq -r '.assets[] | "\(.browser_download_url) \(.name)"')
         while read -r url names
         do
