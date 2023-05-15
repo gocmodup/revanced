@@ -14,7 +14,7 @@
 
 [Revanced Extended](https://github.com/inotia00/revanced-patches/releases)
 
-✅ In [build-rv.sh](build-rv.sh) [build-rve.sh](build-rve.sh) 
+✅ In [build-rv.sh](./src/build-rv.sh) [build-rve.sh](./src/build-rve.sh) 
 
 ✒️  Change "luxysiv" in line 9 to "your_github_name"
 
