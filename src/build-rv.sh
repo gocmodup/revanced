@@ -6,7 +6,7 @@ asset=$(echo "$release" | jq -r '.assets[] | select(.name | test("revanced-patch
 curl -sL -O "$asset"
 ls revanced-patches*.jar >> new.txt
 rm -f revanced-patches*.jar
-release=$(curl -s "https://api.github.com/repos/gocmodup/revanced/releases/latest")
+#release=$(curl -s "https://api.github.com/repos/gocmodup/revanced/releases/latest")
 asset=$(echo "$release" | jq -r '.assets[] | select(.name == "revanced-version.txt") | .browser_download_url')
 curl -sL -O "$asset"
 if diff -q revanced-version.txt new.txt >/dev/null ; then
@@ -23,7 +23,7 @@ get_uptodown "messenger" "facebook-messenger"
 patch "messenger" "messenger-revanced"
 # Patch Instagram
 get_patches_key "instagram"
-version="271.1.0.21.84" 
+#version="271.1.0.21.84" 
 #get_apkmirror_arch "instagram" "instagram" "/instagram/instagram-instagram"
 get_uptodown "instagram" "instagram"
 patch "instagram" "instagram-revanced"
