@@ -17,11 +17,11 @@ echo "All assets downloaded"
 get_patches_key() {
     local folder=$1
     EXCLUDE_PATCHES=()
-        for word in $(cat $folder/exclude-patches) ; do
+        for word in $(cat patches/$folder/exclude-patches) ; do
             EXCLUDE_PATCHES+=("-e $word")
         done
     INCLUDE_PATCHES=()
-        for word in $(cat $folder/include-patches) ; do
+        for word in $(cat patches/$folder/include-patches) ; do
             INCLUDE_PATCHES+=("-i $word")
         done
 }
