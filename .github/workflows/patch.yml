@@ -24,9 +24,10 @@ jobs:
       - name: Generate release info
         run: | 
           echo "
-          **Change log** :point_down:
-          [Revanced](https://github.com/revanced/revanced-patches/releases/latest)
+          **Patches Changelog:** :point_down:
           [Revanced Extended](https://github.com/inotia00/revanced-patches/releases/latest)
+          **IMPORTANT:** :point_down:
+          mMicroG is necessary in order for YouTube to work. Install it first.
           "> ${{ github.workspace }}-CHANGELOG.txt
          
           
@@ -69,9 +70,10 @@ jobs:
       - name: Generate release info
         run: | 
           echo "
-          **Change log** :point_down:
-          [Revanced](https://github.com/revanced/revanced-patches/releases/latest)
+          **Patches Changelog:** :point_down:
           [Revanced Extended](https://github.com/inotia00/revanced-patches/releases/latest)
+          **IMPORTANT:** :point_down:
+          mMicroG is necessary in order for YouTube to work. Install it first.
           "> ${{ github.workspace }}-CHANGELOG.txt
          
           
