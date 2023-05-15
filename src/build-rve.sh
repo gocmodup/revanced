@@ -1,6 +1,6 @@
 #!/bin/bash
 # Revanced Extended build
-source tools.sh
+source ./src/tools.sh
 release=$(curl -s "https://api.github.com/repos/inotia00/revanced-patches/releases/latest")
 asset=$(echo "$release" | jq -r '.assets[] | select(.name | test("revanced-patches.*\\.jar$")) | .browser_download_url')
 curl -sL -O "$asset"
@@ -28,6 +28,7 @@ get_patches_key "youtube-music-revanced-extended"
 get_uptodown "youtube-music" "youtube-music" 
 patch "youtube-music" "youtube-music-revanced-extended"
 # Patch microG
+get_patches_key "mMicroG"
 dl_gh "inotia00" "mMicroG" "latest"
 patch "microg" "mMicroG"
 ls revanced-patches*.jar >> revanced-extended-version.txt
