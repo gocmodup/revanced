@@ -15,7 +15,7 @@ echo "Old patch!!! Not build"
 exit 0
 else
 rm -f *.txt
-dl_gh "inotia00"
+dl_gh "inotia00" "revanced-patches revanced-cli revanced-integrations" "latest"
 # Patch YouTube Extended
 get_patches_key "youtube-revanced-extended"
 get_ver "hide-general-ads" "com.google.android.youtube"
@@ -27,5 +27,8 @@ get_patches_key "youtube-music-revanced-extended"
 #get_apkmirror_arch "youtube-music" "youtube-music" "google-inc/youtube-music/youtube-music"
 get_uptodown "youtube-music" "youtube-music" 
 patch "youtube-music" "youtube-music-revanced-extended"
+# Patch microG
+dl_gh "inotia00" "mMicroG" "latest"
+patch "microg" "mMicroG"
 ls revanced-patches*.jar >> revanced-extended-version.txt
 fi
