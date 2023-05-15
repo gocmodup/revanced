@@ -25,6 +25,7 @@ jobs:
         run: | 
           echo "
           **Patches Changelog:** :point_down:
+          [Revanced](https://github.com/revanced/revanced-patches/releases/latest)
           [Revanced Extended](https://github.com/inotia00/revanced-patches/releases/latest)
           **IMPORTANT:** :point_down:
           mMicroG is necessary in order for YouTube to work. Install it first.
@@ -71,6 +72,7 @@ jobs:
         run: | 
           echo "
           **Patches Changelog:** :point_down:
+          [Revanced](https://github.com/revanced/revanced-patches/releases/latest)
           [Revanced Extended](https://github.com/inotia00/revanced-patches/releases/latest)
           **IMPORTANT:** :point_down:
           mMicroG is necessary in order for YouTube to work. Install it first.
