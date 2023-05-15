@@ -21,6 +21,11 @@ get_patches_key "messenger"
 #get_apkmirror_arch "messenger" "messenger" "facebook-2/messenger/messenger"
 get_uptodown "messenger" "facebook-messenger"
 patch "messenger" "messenger-revanced"
+# Patch Instagram
+get_patches_key "instagram"
+get_apkmirror_arch "instagram" "instagram" "/instagram/instagram-instagram"
+#get_uptodown "instagram" "instagram"
+patch "instagram" "instagram-revanced"
 # Patch Twitch 
 get_patches_key "twitch"
 get_ver "block-video-ads" "tv.twitch.android.app"
