@@ -19,7 +19,7 @@ jobs:
           java-version: '17'
       
       - name: Patch apk
-        run: bash. /src/build-rv.sh  
+        run: bash ./src/build-rv.sh  
         
       - name: Generate release info
         run: | 
