@@ -134,7 +134,7 @@ patch() {
     -a $apk_in.apk \
     ${EXCLUDE_PATCHES[@]} \
     ${INCLUDE_PATCHES[@]} \
-    --keystore=ks.keystore \
+    --keystore=./src/ks.keystore \
     -o ./build/$apk_out.apk
     unset version
     unset EXCLUDE_PATCHES
